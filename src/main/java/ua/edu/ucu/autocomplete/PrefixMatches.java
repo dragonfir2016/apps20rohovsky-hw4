@@ -1,40 +1,71 @@
 package ua.edu.ucu.autocomplete;
 
 import ua.edu.ucu.tries.Trie;
+import ua.edu.ucu.tries.Tuple;
 
-/**
- *
- * @author andrii
- */
+import java.util.ArrayList;
+import java.util.List;
+
+
 public class PrefixMatches {
-
     private Trie trie;
 
     public PrefixMatches(Trie trie) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        this.trie = trie;
     }
 
     public int load(String... strings) {
-        throw new UnsupportedOperationException("Not supported yet.");        
+        if (strings == null) {
+            return 0;
+        }
+        int wordsCount = 0;
+
+        for (String str : strings) {
+            String[] words = str.split("\\s+");
+            for (String word : words) {
+                if (word.length() > 2) {
+                    this.trie.add(new Tuple(word, word.length()));
+                    wordsCount++;
+                }
+            }
+        }
+        return wordsCount;
     }
 
     public boolean contains(String word) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        return this.trie.contains(word);
     }
 
     public boolean delete(String word) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        return this.trie.delete(word);
     }
 
     public Iterable<String> wordsWithPrefix(String pref) {
-        throw new UnsupportedOperationException("Not supported yet.");        
+        if (pref.length() < 2) {
+            throw new IllegalArgumentException("Length of prefix less than 2.");
+        }
+        return this.trie.wordsWithPrefix(pref);
     }
 
     public Iterable<String> wordsWithPrefix(String pref, int k) {
-        throw new UnsupportedOperationException("Not supported yet.");        
+        if (pref.length() < 2) {
+            throw new IllegalArgumentException("Length of prefix less than 2.");
+        }
+        if (k < 0) {
+            throw new IllegalArgumentException("Length of words less than 0.");
+        }
+        Iterable<String> wordsWP = this.wordsWithPrefix(pref);
+        List<String> kWords = new ArrayList<>();
+
+        for (int i = Math.max(pref.length(), 3); i < k + Math.max(pref.length(), 3); i++) {
+            for (String word : wordsWP){
+                if (word.length() == i) kWords.add(word);
+            }
+        }
+        return kWords;
     }
 
     public int size() {
-        throw new UnsupportedOperationException("Not supported yet.");
+        return this.trie.size();
     }
 }
