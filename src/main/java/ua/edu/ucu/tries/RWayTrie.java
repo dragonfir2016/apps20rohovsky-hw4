@@ -1,8 +1,9 @@
 package ua.edu.ucu.tries;
 
 /*
- * This class was implemented using code from Algorithms 4th Edition Robert Sedgewick book
- * and slightly altering it to satisfy the requirements of the task.
+ * This class was implemented using code from Algorithms 4th Edition
+ * Robert Sedgewick book and slightly altering it to satisfy the
+ *  requirements of the task.
  */
 
 import ua.edu.ucu.collections.Queue;
@@ -24,18 +25,18 @@ public class RWayTrie implements Trie {
         this.root = put(this.root, t.term, t.weight, 0);
     }
 
-    private Node put(Node x, String key, int val, int CurrDepth) {
+    private Node put(Node x, String key, int val, int currDepth) {
         if (x == null) {
             x = new Node();
         }
 
-        if (CurrDepth == key.length()) {
+        if (currDepth == key.length()) {
             x.val = val;
             return x;
         }
 
-        char c = key.charAt(CurrDepth);
-        x.next[c] = put(x.next[c], key, val, CurrDepth + 1);
+        char c = key.charAt(currDepth);
+        x.next[c] = put(x.next[c], key, val, currDepth + 1);
         return x;
     }
 
@@ -53,9 +54,9 @@ public class RWayTrie implements Trie {
         return x.val;
     }
 
-    private Node get(Node x, String key, int currDepth) { // Return node associated with key in
+    private Node get(Node x, String key, int currDepth) {
         if (x == null) {
-            return null;                       // the subtrie rooted at x.
+            return null;
         }
         if (currDepth == key.length()) {
             return x;
@@ -86,8 +87,11 @@ public class RWayTrie implements Trie {
             return x;
         }
 
-        for (char c = 0; c < R; c++)
-            if (x.next[c] != null) return x;
+        for (char c = 0; c < R; c++) {
+            if (x.next[c] != null) {
+                return x;
+            }
+        }
         return null;
     }
 
@@ -118,8 +122,9 @@ public class RWayTrie implements Trie {
             q.enqueue(pre);
         }
 
-        for (char c = 0; c < R; c++)
+        for (char c = 0; c < R; c++) {
             collect(x.next[c], pre + c, q);
+        }
     }
 
     @Override
@@ -137,8 +142,9 @@ public class RWayTrie implements Trie {
             currSize++;
         }
 
-        for (char c = 0; c < R; c++)
+        for (char c = 0; c < R; c++) {
             currSize += size(x.next[c]);
+        }
         return currSize;
     }
 }

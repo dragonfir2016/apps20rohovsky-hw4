@@ -8,7 +8,6 @@ import java.util.List;
 
 
 public class PrefixMatches {
-    private int MIN_LEN = 3;
     private Trie trie;
 
     public PrefixMatches(Trie trie) {
@@ -58,10 +57,13 @@ public class PrefixMatches {
         Iterable<String> wordsWP = this.wordsWithPrefix(pref);
         List<String> kWords = new ArrayList<>();
 
-        int length = Math.max(pref.length(), MIN_LEN);
+        int min_len = 3;
+        int length = Math.max(pref.length(), min_len);
         for (int i = length; i < k + length; i++) {
-            for (String word : wordsWP){
-                if (word.length() == i) kWords.add(word);
+            for (String word : wordsWP) {
+                if (word.length() == i) {
+                    kWords.add(word);
+                }
             }
         }
         return kWords;

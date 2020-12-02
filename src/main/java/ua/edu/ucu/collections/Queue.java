@@ -23,7 +23,7 @@ public class Queue {
         this.lst = this.lst.addLast(e);
     }
 
-    public int size(){
+    public int size() {
         return this.lst.size();
     }
 }
